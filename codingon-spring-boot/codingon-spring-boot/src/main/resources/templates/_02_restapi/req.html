@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>========================GET 요청========================</h1>
+    <div style="display:flex">
+        <form action="/get/res1" method="get" style="margin-right:20px;">
+            <h3>GET 전송 (required = true)</h3>
+            이름 : <input type="text" name="name"><br/>
+            나이 : <input type ="text" name ="age">  <br/>
+            <button>Get 전송</button>
+        </form>
+        <form action="/get/res2" method="get" style="margin-right:20px;">
+            <h3>GET 전송 (required = false)</h3>
+            <br/>
+            <button>Get 전송</button>
+        </form>
+        <div style="margin-right:20px;">
+            <h3>GET 전송 - ~/{param1}/{param2}</h3>
+            <a href="/get/res3/홍길동/20">
+                get/res3/홍길동/20
+            </a>
+            <br/>
+            <a href="/get/res3/홍길동">
+                get/res3/홍길동 (error, 경로 변수 값 필수 확인)
+            </a>
+        </div>
+        <div style="margin-right:20px;">
+            <h3>GET 전송 - ~/{name}, ~/{name}/{age}</h3>
+            <a href="/get/res4/바나나">
+                get/res4/바나나
+            </a>
+            <br/>
+            <a href="/get/res4/바나나/1">
+                get/res3/바나나/1
+            </a>
+        </div>
+    </div>
+    <hr/>
+    <h1>========================POST 요청========================</h1>
+    <form action="/post/res1" method="post" style="margin-right:20px;">
+        <h3>POST 전송 (required = true)</h3>
+        이름 : <input type="text" name="name"><br/>
+        나이 : <input type ="text" name ="age">  <br/>
+        <button>POST 전송</button>
+    </form>
+
+    <form action="/post/res2" method="post" style="margin-right:20px;">
+        <h3>POST 전송 (required = false)</h3>
+        이름 : <input type="text" name="name"><br/>
+        나이 : <input type ="text" name ="age">  <br/>
+        <button>POST 전송</button>
+    </form>
+
+    <form action="/post/res3" method="post" style="margin-right:20px;">
+        <h3>POST 전송 (ResponseBody)</h3>
+        이름 : <input type="text" name="name"><br/>
+        나이 : <input type ="text" name ="age"> <br/>
+        <button>POST 전송</button>
+    </form>
+
+    <h1>========================DTO 이용========================</h1>
+    <div style="display:flex">
+        <form action="/dto/res1" method="get" style="margin-right:20px;">
+            <h3>GET 전송 -DTO</h3>
+            이름 : <input type="text" name="name"><br/>
+            나이 : <input type ="text" name ="age">  <br/>
+            <button>Get 전송</button>
+        </form>
+        <form action="/dto/res2" method="post" style="margin-right:20px;">
+            <h3>POST 전송 -DTO</h3>
+            이름 : <input type="text" name="name"><br/>
+            나이 : <input type ="text" name ="age">  <br/>
+            <button>POST 전송(RequestBody X)</button>
+        </form>
+        <form action="/dto/res3" method="post" style="margin-right:20px;">
+            <h3>POST 전송 -DTO</h3>
+            이름 : <input type="text" name="name"><br/>
+            나이 : <input type ="text" name ="age">  <br/>
+            <button>POST 전송(RequestBody O)</button>
+        </form>
+    </div>
+
+</body>
+</html>

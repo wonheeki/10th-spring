@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!--<p th:text="'내 이름은 '+${name}">이름 : <strong th:text="${name}"></strong></p>-->
+
+<!--<p>이름 : <strong th:text="${name}"></strong></p>-->
+<!--<p>나이 : <strong th:text="${age}"></strong></p>-->
+
+<div>이름 : <span th:text="${name}"></span></div>
+<div>성별 : <span th:text="${gender}"></span></div>
+<div>생년월일 : <span th:text="${birthday}"></span></div>
+<div>관심사 :
+<!--    <span th:each=" i: ${interest}" th:text="${i}+','"></span>-->
+    <span th:each="i, iterStat : ${interest}">
+        <span th:text="${i}"></span>
+        <span th:if="${!iterStat.last}">,</span>
+    </span>
+
+</body>
+</html>
+</div>

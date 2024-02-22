@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <a href="practice/introduce/기원희">introduce/이름</a><br/>
+    <a href="practice/introduce2?name=기원희&age=25">introduce?이름=이름&나이=나이</a>
+    <form method="post" action="/practice/register1" >
+        <div style="border:1px solid black; width:fit-content; padding:5px;">
+        이름 <input name="name" type="text"><br/>
+        성별<input type="radio" name="gender" value="남자"> 남자
+        <input type="radio" name="gender" value="여자"> 여자<br/>
+        생년월일<select name="year" id="year">
+            <option th:each="num : ${#numbers.sequence(1950,2023)}" th:text="${num}"></option>
+    </select>년
+        <select name="month" id="month">
+            <option th:each="num : ${#numbers.sequence(1,12)}" th:text="${num}"></option>
+<!--            <option>1</option>-->
+<!--            <option>2</option>-->
+<!--            <option>3</option>-->
+<!--            <option>4</option>-->
+        </select>월
+        <select name="day" id="day">
+            <option th:each="num : ${#numbers.sequence(1,31)}" th:text="${num}"></option>
+        </select>일<br/>
+        관심사<input type="checkbox" name="interest" value="여행">여행
+        <input type="checkbox" name="interest" value="패션">패션
+        <input type="checkbox" name="interest" value="음식">음식
+        </div>
+        <button>회원가입</button>
+    </form>
+
+</body>
+</html>

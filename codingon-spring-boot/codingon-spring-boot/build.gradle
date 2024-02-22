@@ -28,6 +28,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools' // 변경 사항 자동 빌드
+//	annotationProcessor('org.projectlombok:lombok:1.18.24')
 }
 
 tasks.named('test') {

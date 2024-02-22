@@ -35,20 +35,7 @@ public class HelloController {
         return "_01_thymeleaf/hi";
     }
 
-    @GetMapping("/people")
-    public String getPeople(Model model){
-        model.addAttribute("age",19);
 
-        ArrayList<Person> people = new ArrayList<Person>();
-        people.add(new Person("kim",10));
-        people.add(new Person("lee",20));
-        people.add(new Person("hong",30));
-        people.add(new Person("park",40));
-        people.add(new Person("shin",50));
-        model.addAttribute("people",people);
-
-        return "_01_thymeleaf/example";
-    }
 }
 
 class Hello{
@@ -62,22 +49,4 @@ class Hello{
     }
 }
 
-class Person{
-    private String name;
-    private int age;
-
-    public Person(String name, int age){
-        this.name = name;
-        this.age = age;
-    }
-
-    public String getName(){
-        return name;
-    }
-    public int getAge(){
-        return age;
-    }
-
-
-}
 
