@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="codingon.codingonspringbootmybatis.mapper.BoardMapper">
+    <select id="getBoard" resultType="codingon.codingonspringbootmybatis.domain.Board">
+        SELECT * FROM Board
+
+    </select>
+    <select id="getTitleBoard" resultType="codingon.codingonspringbootmybatis.domain.Board">
+        SELECT * FROM Board
+                <where>
+                    title = #{title}
+                </where>
+    </select>
+    <insert id="insertBoard" parameterType="codingon.codingonspringbootmybatis.domain.Board">
+        insert into Board (title,content,writer) values(#{title},#{content},#{writer})
+    </insert>
+    <update id="updateBoard" parameterType="codingon.codingonspringbootmybatis.domain.Board">
+        update Board
+        <set>
+            title=#{title}, content=#{content}, writer=#{writer}
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+    <delete id="deleteBoard" parameterType="codingon.codingonspringbootmybatis.domain.Board">
+        delete from Board
+        <where>
+            id=#{id}
+        </where>
+
+    </delete>
+</mapper>

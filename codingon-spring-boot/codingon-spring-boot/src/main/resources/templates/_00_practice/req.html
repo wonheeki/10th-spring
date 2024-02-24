@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
     <title>Title</title>
+    <!--axios cdn 추가 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 </head>
 <body>
     <a href="practice/introduce/기원희">introduce/이름</a><br/>
@@ -29,8 +32,41 @@
         <input type="checkbox" name="interest" value="패션">패션
         <input type="checkbox" name="interest" value="음식">음식
         </div>
-        <button>회원가입</button>
+<!--        <button>회원가입</button>-->
+        <button type="button" onclick="formSubmitGet()">회원가입 - GET</button>
+        <button type="button" onclick="formSubmitPost()">회원가입 - POST</button>
+
     </form>
+    <script>
+        function formSubmitGet() {
+        const form = document.getElementById("userInfo");
+        axios
+            .get(
+                `/axios/prac/vo/get?name=${form.name.value}&gender=${form.gender.value}&year=${form.year.value}&month=${form.month.value}&date=${form.date.value}&hobby=${form.hobby.value}`
+            )
+            .then((res) => {
+                console.log(res);
+                console.log("실습 9 AXIOS - GET : ", res.data);
+                });
+        }
+        function formSubmitPost() {
+            const form = document.getElementById("userInfo");
+            axios
+                .post(`/axios/prac/vo/post`, {
+                    name: form.name.value,
+                    gender: form.gender.value,
+                    year: form.year.value,
+                    month: form.month.value,
+                    date: form.date.value,
+                    hobby: form.hobby.value,
+                })
+                .then((res) => {
+                    console.log(res);
+                    console.log("실습 9 AXIOS - POST : ", res.data);
+                });
+        }
+
+    </script>
 
 </body>
 </html>

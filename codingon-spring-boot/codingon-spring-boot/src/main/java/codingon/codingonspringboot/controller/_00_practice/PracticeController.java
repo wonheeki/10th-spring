@@ -1,14 +1,12 @@
 package codingon.codingonspringboot.controller._00_practice;
 
+import codingon.codingonspringboot.vo.UserVoPrac;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +65,24 @@ public class PracticeController {
         return "_00_practice/res";
     }
 
-    
+    @GetMapping("/axios/prac/form")
+    public String getReq() {return"_00_practice/AxiosPrac1";};
+    @GetMapping("/axios/prac/vo/get")
+    @ResponseBody
+    public String pracVoGet(@RequestParam String name, @RequestParam String gender, @RequestParam int year, @RequestParam int month, @RequestParam int date, @RequestParam String hobby) {
+        return name + "님 회원가입 성공";
+    }
+
+    @PostMapping("/axios/prac/vo/post")
+    @ResponseBody
+    public String pracVoPost(@RequestBody UserVoPrac userVoPrac) {
+        return userVoPrac.getName() + "님 회원가입 성공";
+    }
+
+
+
+
+
 
 }
 

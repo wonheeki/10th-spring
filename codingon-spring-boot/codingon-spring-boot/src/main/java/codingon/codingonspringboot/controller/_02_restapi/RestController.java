@@ -1,6 +1,7 @@
 package codingon.codingonspringboot.controller._02_restapi;
 
 import codingon.codingonspringboot.dto.UserDTO;
+import codingon.codingonspringboot.vo.UserVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -134,4 +135,100 @@ public class RestController {
         return userDTO.getName()+ " "+userDTO.getAge();
     } // X : (type=Unsupported Media Type, status=415)
 
+
+    // ================= VO 이용 ====================
+    @GetMapping("/vo/res1")
+    @ResponseBody
+    public String voRes1(@ModelAttribute UserVO userVO) {
+        System.out.println(userVO.hashCode()); // 961
+        // @ModelAttribute 를 이용하면 객체의 set 함수를 이용해 값을 넣어줌
+        // return userVO.getName() + " " + userVO.getAge();
+
+        String msg = "이름 : " + userVO.getName() + " 나이 : " + userVO.getAge();
+        return msg;
+    } // o (null, null) -> 에러는 안 나지만 null 값 찍힘
+
+    @PostMapping("/vo/res2")
+    @ResponseBody
+    public String voRes2(UserVO userVO) {
+        return userVO.getName() + " " + userVO.getAge();
+    } // o (null, null)
+
+    @PostMapping("/vo/res3")
+    @ResponseBody
+    public String voRes3(@RequestBody UserVO userVO) {
+        return userVO.getName() + " " + userVO.getAge();
+    } // X: error (type=Unsupported Media Type, status=415)
+
+    // ================= DTO 이용 with axios ====================
+    @GetMapping("/axios/res1")
+    @ResponseBody
+    public String axiosRes1(@RequestParam String name, @RequestParam String age){
+        return "이름 : " + name + ", 나이 : "+ age;
+    } // o
+    @GetMapping("/axios/res2")
+    @ResponseBody
+    public String axiosRes2(UserDTO userDTO){
+        return "이름 : " + userDTO.getName() + ", 나이 : "+ userDTO.getAge();
+    } // o
+
+    @PostMapping("/axios/res3")
+    @ResponseBody
+    public  String axiosRes3(@RequestParam String name, @RequestParam String age){
+        // @RequestParam required 기본값이 true
+        // axios로 값을 전달하게 될 경우 파라미터로 값이 들어오지 않는다. (Post로 보냈을 때)
+        // 값이 들어오지 않는데 기본값이 true이기 때문에 오류
+        return "이름 : " + name + ", 나이 : "+ age;
+    } // x (error 400)
+
+    @PostMapping("/axios/res4")
+    @ResponseBody
+    public  String axiosRes4(UserDTO userDTO){
+        return "이름 : " + userDTO.getName() + ", 나이 : "+ userDTO.getAge();
+    } // o (이름 : null, 나이 : 0)
+
+    @PostMapping("/axios/res5")
+    @ResponseBody
+    public  String axiosRes5(@RequestBody UserDTO userDTO){
+        return "이름 : " + userDTO.getName() + ", 나이 : "+ userDTO.getAge();
+    } // o
+
+    // ================= VO 이용 with axios ====================
+    @GetMapping("/axios/vo/res1")
+    @ResponseBody
+    public String axiosVoRes1(@RequestParam String name, @RequestParam String age){
+        return "이름 : " + name + ", 나이 : "+ age;
+    } // o
+
+    @GetMapping("/axios/vo/res2")
+    @ResponseBody
+    public String axiosVoRes2(UserVO userVO){
+        // @ModelAttribute 생략된 상태, setter 함수를 실행해서 값을 넣어주기 때문에 null
+        // UserVO에는 setter없음
+        return "이름 : " + userVO.getName() + ", 나이 : "+ userVO.getAge();
+    } // // o (이름 : null, 나이 : 0)
+
+    @PostMapping("/axios/vo/res3")
+    @ResponseBody
+    public  String axiosVoRes3(@RequestParam String name, @RequestParam String age){
+        // @RequestParam required 기본값이 true
+        // axios로 값을 전달하게 될 경우 파라미터로 값이 들어오지 않는다. (Post로 보냈을 때)
+        // 값이 들어오지 않는데 기본값이 true이기 때문에 오류
+        return "이름 : " + name + ", 나이 : "+ age;
+    } // x (error 400)
+
+    @PostMapping("/axios/vo/res4")
+    @ResponseBody
+    public  String axiosVoRes4(UserVO userVO){
+        return "이름 : " + userVO.getName() + ", 나이 : "+ userVO.getAge();
+    } // o (이름 : null, 나이 : 0)
+
+    @PostMapping("/axios/vo/res5")
+    @ResponseBody
+    public  String axiosVoRes5(@RequestBody UserVO userVO){
+        // @RequestBody로 값을 전달할 때 userVO에 setter 함수가 없어도 값이 들어간다.
+        // setter 함수 실행이 아니라 각각의 필드(변수)에 직접적으로 값을 주입하면서 매핑
+        // (ModelAttribute가 setter을 실행해서 값을 넣어준다면, RequestBody는 각각의 필드에 값을 직접 넣어준다)
+        return "이름 : " + userVO.getName() + ", 나이 : "+ userVO.getAge();
+    } // o
 }
