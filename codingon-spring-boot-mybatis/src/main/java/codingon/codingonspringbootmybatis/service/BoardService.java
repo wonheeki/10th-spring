@@ -1,9 +1,7 @@
 package codingon.codingonspringbootmybatis.service;
 
 import codingon.codingonspringbootmybatis.domain.Board;
-import codingon.codingonspringbootmybatis.domain.User;
 import codingon.codingonspringbootmybatis.dto.BoardDTO;
-import codingon.codingonspringbootmybatis.dto.UserDTO;
 import codingon.codingonspringbootmybatis.mapper.BoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,51 +11,45 @@ import java.util.List;
 
 @Service
 public class BoardService {
-
     @Autowired
     BoardMapper boardMapper;
 
-    public List<BoardDTO> getBoardList(){
-        List<Board> boards = boardMapper.getBoard();
-        List<BoardDTO> result = new ArrayList<>();
+    public List<BoardDTO> getAll() {
+        // getAll() 메소드는 "select * from board" sql 을 실행하는 함수
+        List<Board> result = boardMapper.getAll();
+        List<BoardDTO> list = new ArrayList<>();
 
-        for (Board board : boards) {
+        for (Board board : result) {
             BoardDTO boardDTO = BoardDTO.builder()
+                    .id(board.getId())
                     .title(board.getTitle())
                     .content(board.getContent())
                     .writer(board.getWriter())
-                    .id(board.getId()+100).build();
+                    .registered(board.getRegistered())
+                    .no(board.getWriter() + board.getId())
+                    .build();
 
-            result.add(boardDTO);
+            list.add(boardDTO);
         }
-        return  result;
+        return list;
     }
 
-    public List<BoardDTO> getTitleBoardList(Board b) {
-        List<Board> boards = boardMapper.getTitleBoard(b);
-        List<BoardDTO> result = new ArrayList<>();
-
-        for (Board board : boards) {
-            BoardDTO boardDTO = BoardDTO.builder()
-                    .title(board.getTitle())
-                    .content(board.getContent())
-                    .writer(board.getWriter())
-                    .id(board.getId() + 100).build();
-
-            result.add(boardDTO);
-        }
-        return result;
-    }
-
-    public void insertBoard(Board board){
+    public void insertBoard(Board board) {
         boardMapper.insertBoard(board);
     }
 
-    public void updateBoard(Board board){
-        boardMapper.updateBoard(board);
+    public void patchBoard(Board board) {
+        boardMapper.patchBoard(board);
     }
 
-    public void deleteBoard(Board board){
-        boardMapper.deleteBoard(board);
+    public void deleteBoard(int id) {
+        boardMapper.deleteBoard(id);
+    }
+
+    public int searchBoard(String word) {
+        // select 문 자체를 count 로 동작시킬 수도 있고,
+        // List 로 받아와서 그에 대한 길이를 전달할 수도 있다
+        List<Board> result = boardMapper.searchBoard(word);
+        return result.size();
     }
 }

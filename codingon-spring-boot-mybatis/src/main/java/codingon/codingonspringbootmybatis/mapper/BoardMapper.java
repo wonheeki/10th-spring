@@ -7,10 +7,9 @@ import java.util.List;
 
 @Mapper
 public interface BoardMapper {
-    List<Board> getBoard();
-    List<Board> getTitleBoard(Board board);
-
+    List<Board> getAll();
     void insertBoard(Board board);
-    void deleteBoard(Board board);
-    void updateBoard(Board board);
+    void patchBoard(Board board);
+    void deleteBoard(int id);
+    List<Board> searchBoard(String word);
 }

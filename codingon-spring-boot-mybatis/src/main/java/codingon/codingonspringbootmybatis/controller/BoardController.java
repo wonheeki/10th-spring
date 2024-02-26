@@ -1,9 +1,7 @@
 package codingon.codingonspringbootmybatis.controller;
 
 import codingon.codingonspringbootmybatis.domain.Board;
-import codingon.codingonspringbootmybatis.domain.User;
 import codingon.codingonspringbootmybatis.dto.BoardDTO;
-import codingon.codingonspringbootmybatis.dto.UserDTO;
 import codingon.codingonspringbootmybatis.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,64 +11,44 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+@RequestMapping("/board") // 공동 경로
 public class BoardController {
     @Autowired
     BoardService boardService;
 
-    @GetMapping("/prac/board")
-    public String pracBoard(Model model) {
-
-        List<BoardDTO> boards = boardService.getBoardList();
-        model.addAttribute("list", boards);
+    @GetMapping("")
+    public String getBoards(Model model) {
+        // 1. 전부 select
+        List<BoardDTO> list = boardService.getAll();
+        model.addAttribute("list", list);
         return "board";
     }
 
-    @PostMapping("/prac/boardInsert")
-    public String pracBoardInsert(@RequestParam String title, @RequestParam String content, @RequestParam String writer, Model model) {
-        Board board = new Board();
-        board.setTitle(title);
-        board.setContent(content);
-        board.setWriter(writer);
-
+    @PostMapping("")
+    @ResponseBody
+    public void postBoard(@RequestBody Board board) {
+        // 2. 게시글 작성 - insert
         boardService.insertBoard(board);
-        List<BoardDTO> boards = boardService.getBoardList();
-        model.addAttribute("list", boards);
-        return "board";
     }
 
-    @GetMapping("/prac/allBoard")
-    public String pracGetAllBoard(Model model) {
-        List<BoardDTO> boards = boardService.getBoardList();
-        model.addAttribute("list", boards);
-        return "redirect:/prac/board";
+    @PatchMapping("")
+    @ResponseBody
+    public void patchBoard(@RequestBody Board board) {
+        // 3. 게시글 수정 - update
+        boardService.patchBoard(board);
     }
 
-    @GetMapping("/prac/titleBoard")
-    public String pracGetBoard(@RequestParam String title, Model model) {
-        Board board = new Board();
-        board.setTitle(title);
-        List<BoardDTO> boards = boardService.getTitleBoardList(board);
-        System.out.println(boards);
-        model.addAttribute("list", boards);
-        return "board";
+    @DeleteMapping("")
+    @ResponseBody
+    public void deleteBoard(@RequestParam int id) {
+        // 4. 게시글 삭제 - delete
+        boardService.deleteBoard(id);
     }
 
-    @DeleteMapping("/prac/deleteBoard")
-    public String pracDeleteBoard(@RequestParam int id, Model model) {
-        Board board = new Board();
-        board.setId(id);
-        boardService.deleteBoard(board);
-        return "redirect:/prac/board";
-    }
-
-    @PatchMapping("/prac/updateBoard")
-    public String pracUpdateBoard( @RequestParam int id, String title, String content, String writer,Model model) {
-        Board board = new Board();
-        board.setId(id);
-        board.setTitle(title);
-        board.setContent(content);
-        board.setWriter(writer);
-        boardService.updateBoard(board);
-        return "redirect:/prac/board";
+    @GetMapping("/search")
+    @ResponseBody
+    public int searchBoard(@RequestParam String word) {
+        // 5. 게시글 검색 - get
+        return boardService.searchBoard(word);
     }
 }

@@ -2,41 +2,28 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>게시판</title>
 </head>
 <body>
+<h1>게시판</h1>
 
-<div style="border:1px solid black; width:fit-content; padding:10px; ">
-    <h3>글 작성하기</h3>
-    <form method="post" action="/prac/boardInsert">
-        제목 : <input type="text" name="title"><br/>
-        내용 : <input type ="text" name="content"><br/>
-        작성자 : <input type="text" name="writer"><br/>
-        <button>작성하기</button>
-    </form>
-</div>
-<hr>
-<h3>글 검색하기</h3>
-<form method="get" action="/prac/titleBoard">
-    <input type="text" name="title"><button>검색</button><br/>
-</form>
-
-<!--<button type="button" onclick="location.href='/prac/allBoard'" >전체 글 가져오기</button>-->
-    <a href="/prac/allBoard">전체 글 가져오기</a>
-    <table border="1">
-        <tr>
-            <th>No.</th>
-            <th>제목</th>
-            <th>내용</th>
-            <th>작성자</th>
-        </tr>
-        <tr th:each="board:${list}">
-            <td th:text="${board.getId()}"></td>
-            <td th:text="${board.getTitle()}"></td>
-            <td th:text="${board.getContent()}"></td>
-            <td th:text="${board.getWriter()}"></td>
-        </tr>
-    </table>
-<a href=""></a>
+<table border="1">
+    <tr>
+        <th>No.</th>
+        <th>ID</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>내용</th>
+        <th>작성일</th>
+    </tr>
+    <tr th:each="board:${list}">
+        <td th:text="${board.getNo()}"></td>
+        <td th:text="${board.getId()}"></td>
+        <td th:text="${board.getTitle()}"></td>
+        <td th:text="${board.getWriter()}"></td>
+        <td th:text="${board.getContent()}"></td>
+        <td th:text="${board.getRegistered()}"></td>
+    </tr>
+</table>
 </body>
 </html>
